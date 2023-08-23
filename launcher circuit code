@@ -1,0 +1,44 @@
+const int trigPin = 2;
+const int echoPin = 3;
+const int relay = 9;
+long duration;
+int distance;
+int safetyDistance;
+
+void setup() {
+  // put your setup code here, to run once:
+pinMode(trigPin, OUTPUT); // Sets the trigPin as an Output
+pinMode(echoPin, INPUT);
+pinMode(relay, OUTPUT);// Sets the echoPin as an Input
+Serial.begin(9600); // Starts the serial communication
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+
+
+// Sets the trigPin on HIGH state for 10 micro seconds
+digitalWrite(trigPin, LOW);
+delayMicroseconds(2);
+
+digitalWrite(trigPin, HIGH);
+delayMicroseconds(10);
+
+digitalWrite(trigPin,LOW);
+
+// Reads the echoPin, returns the sound wave travel time in microseconds
+duration = pulseIn(echoPin,HIGH);
+// Calculating the distance
+distance= duration*0.034/2;
+Serial.println(distance);
+delay(50);
+safetyDistance = distance;
+if((distance>=15))
+  {
+    digitalWrite(relay, HIGH);
+}
+   else if(distance<15)
+ {
+     digitalWrite(relay, LOW);
+   }
+}
